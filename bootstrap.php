@@ -14,6 +14,11 @@ $whoops->register();
 try {
     session_start();
     
+    //Fake CSRF Token //@todo: move to login
+    if(!isset($_SESSION['csrf_token'])){
+        $_SESSION['csrf_token'] = uniqid('', true);
+    }
+    
     $database_connections = [];
     $database_config = include_once __DIR__ . '/config/database.php';
     foreach($database_config as $key => $value){

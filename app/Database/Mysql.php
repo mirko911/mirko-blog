@@ -42,8 +42,13 @@ class Mysql{
         $this->stmt->bindValue($key, $value, $type);
     }
     
-    public function execute() : ?array {
+    public function execute($returnResult = true) : ?array {
         $this->stmt->execute();
-        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+        if($returnResult){
+            return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+            return null;
+        }
     }
+    
 }

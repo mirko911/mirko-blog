@@ -8,10 +8,17 @@
 
 namespace App\Http;
 
-use App\Router\Request;
+use Jenssegers\Blade\Blade;
 
-class PostController{
+use App\Router\Request;
+use App\Models\Post;
+
+class PostController{    
     public function list(Request $request){
-        echo "Index  workls";
+        $posts = Post::query()->get();
+        
+        $blade = new Blade('../views', '../cache');
+        
+        return $blade->make('posts', ['posts' => $posts])->render();
     }
 }
