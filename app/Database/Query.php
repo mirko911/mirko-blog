@@ -45,7 +45,9 @@ class Query {
     }
     
     public function setOrder(string $column, string $order = "ASC") : Query{
-        $this->order[] = compact($column, $order);
+        $this->order[] = ['column' => $column, 'order' => $order];
+        
+        return $this;
     }
     
     private function buildQuery() : array {

@@ -16,7 +16,7 @@ use App\Models\Post;
 
 class PostController{    
     public function list(Request $request){
-        $posts = Post::query()->get();
+        $posts = Post::query()->setOrder('created_at', 'DESC')->get();
         
         $blade = new Blade('../views', '../cache');
         
