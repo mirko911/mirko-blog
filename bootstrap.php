@@ -3,6 +3,7 @@
 use App\Database\Mysql;
 use App\Router\Router;
 use App\Router\Request;
+use App\Models\BaseModel;
 
 //Dev-Tool for development. Will be removed in final project
 $whoops = new \Whoops\Run;
@@ -18,6 +19,7 @@ try {
     foreach($database_config as $key => $value){
         $database_connections[$key] = new Mysql($value);
     }
+    BaseModel::setDatabaseConnections($database_connections);
 
     $request = new Request($_GET, $_POST, $_COOKIE, $_SESSION, $_SERVER);
     
