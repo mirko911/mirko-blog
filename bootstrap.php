@@ -5,14 +5,11 @@ use App\Router\Router;
 use App\Router\Request;
 use App\Models\BaseModel;
 
-//Dev-Tool for development. Will be removed in final project
-$whoops = new \Whoops\Run;
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-$whoops->register();
-
-
 try {
     session_start();
+    
+    $app_config = include_once __DIR__ . '/config/app.php';
+
     
     //Fake CSRF Token //@todo: move to login
     if(!isset($_SESSION['csrf_token'])){
@@ -34,5 +31,11 @@ try {
             ->handleResponse();
     
 } catch (Exception $ex) {
-    $whoops->handleException($ex);
+    $response = new App\Router\Response();
+    if($app_config['debug']){
+            $response->response($ex->getMessage(), 500);
+    }else{
+            $response->response("S.th went wrong", 500);
+    }
+    $response->handleResponse();
 }

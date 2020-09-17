@@ -4,7 +4,6 @@
     "type": "project",
     "require-dev": {
         "larapack/dd": "^1.1",
-		"filp/whoops": "^2.7"
     },
     "license": "WTFPL",
     "authors": [
