@@ -96,7 +96,11 @@ class Query {
         
         $result = $this->connection->execute();
         
-        return new $this->model($result[0]);
+        if(empty($result)){
+            return null;
+        }else{
+            return new $this->model($result[0]);
+        }        
     }
     
     public function get() {

@@ -9,10 +9,16 @@ namespace App\Http;
 
 use App\Router\Request;
 use App\Models\User;
+use App\Auth\Auth;
 use Jenssegers\Blade\Blade;
 
 
 class AdminUserController {
+    public function __construct(){
+        if(!Auth::isLoggedIn()){
+            dd("Not logged in");
+        }
+    }
     public function list(Request $request){
         $users = User::query()->get();
         

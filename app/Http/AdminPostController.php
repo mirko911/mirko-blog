@@ -13,6 +13,13 @@ use Jenssegers\Blade\Blade;
 
 
 class AdminPostController {
+    
+    public function __construct(){
+        if(!Auth::isLoggedIn()){
+            dd("Not logged in");
+        }
+    }
+    
     public function list(Request $request){
         $posts = Post::query()->get();
         
