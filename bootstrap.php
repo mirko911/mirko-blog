@@ -25,7 +25,9 @@ try {
     $router = new Router();
     $router->handleRequest($request);
     
-    
+    $query = new App\Database\Query($database_connections['default']);
+    $result = $query->setFrom('posts')->get();
+    dd($result);
 } catch (Exception $ex) {
     $whoops->handleException($ex);
 }

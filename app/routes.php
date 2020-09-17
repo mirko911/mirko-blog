@@ -2,6 +2,7 @@
 
 use App\Router\Router;
 
+Router::add('/test', 'TestController@test');
 Router::add('/', 'PostController@list');
 Router::add('/post/1', 'PostController@show');
 Router::add('/login', 'LoginController@show');
