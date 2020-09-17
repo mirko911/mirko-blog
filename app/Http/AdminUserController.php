@@ -24,7 +24,7 @@ class AdminUserController {
         
         $blade = new Blade('../views', '../cache');
         
-        $view = $blade->make('adminuser_list', ['users' => $users])->render();
+        $view = $blade->make('admin.user.list', ['users' => $users])->render();
         
         return (new Response())->response($view, 200);  
     }
@@ -36,7 +36,7 @@ class AdminUserController {
         
         $blade = new Blade('../views', '../cache');
 
-        $view = $blade->make('adminuser_create', ['csrf_token' => $_SESSION['csrf_token']])->render();
+        $view = $blade->make('admin.user.create', ['csrf_token' => $_SESSION['csrf_token']])->render();
         
         return (new Response())->response($view, 200);  
     }

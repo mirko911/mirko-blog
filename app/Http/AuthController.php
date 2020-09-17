@@ -18,7 +18,7 @@ class AuthController {
     public function login(Request $request) : Response{
         $blade = new Blade('../views', '../cache');
         
-        $view = $blade->make('auth_login',  ['csrf_token' => $_SESSION['csrf_token']])->render();
+        $view = $blade->make('auth.login',  ['csrf_token' => $_SESSION['csrf_token']])->render();
         return (new Response())->response($view, 200);  
     }
     

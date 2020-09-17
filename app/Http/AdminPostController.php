@@ -29,7 +29,7 @@ class AdminPostController {
         
         $blade = new Blade('../views', '../cache');
         
-        $view = $blade->make('adminpost_list', ['posts' => $posts])->render();
+        $view = $blade->make('admin.post.list', ['posts' => $posts])->render();
         return (new Response())->response($view, 200);  
 
     }
@@ -41,7 +41,7 @@ class AdminPostController {
         
         $blade = new Blade('../views', '../cache');
 
-        $view = $blade->make('adminpost_create', ['csrf_token' => $_SESSION['csrf_token']])->render();
+        $view = $blade->make('admin.post.create', ['csrf_token' => $_SESSION['csrf_token']])->render();
         
         return (new Response())->response($view, 200);  
 

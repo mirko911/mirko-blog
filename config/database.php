@@ -4,7 +4,7 @@ return [
     "default" => [
         "host" => "localhost",
         "username" => "mirko",
-        "password" => "123451",
+        "password" => "12345",
         "database" => "blog"
     ],
 ];

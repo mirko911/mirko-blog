@@ -20,7 +20,7 @@ class PostController{
         
         $blade = new Blade('../views', '../cache');
         
-        $view =  $blade->make('posts', ['posts' => $posts])->render();
+        $view =  $blade->make('post.list', ['posts' => $posts])->render();
         
         return (new Response())->response($view, 200);  
     }
