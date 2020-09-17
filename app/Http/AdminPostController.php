@@ -20,7 +20,7 @@ class AdminPostController {
 
     }
     
-    public function list(Request $request){
+    public function list(Request $request) : Response{
         if(!Auth::isLoggedIn()){
             return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
         }
@@ -34,7 +34,7 @@ class AdminPostController {
 
     }
     
-    public function create(Request $request){
+    public function create(Request $request) : Response{
         if(!Auth::isLoggedIn()){
             return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
         }
@@ -47,7 +47,7 @@ class AdminPostController {
 
     }
     
-    public function store(Request $request){
+    public function store(Request $request) : Response{
         if(!Auth::isLoggedIn()){
             return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
         }

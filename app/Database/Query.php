@@ -8,6 +8,8 @@
 
 namespace App\Database;
 
+use App\Models\BaseModel;
+
 class Query {
     /**
      *
@@ -79,7 +81,7 @@ class Query {
         return [$query, $bindings];
     }
     
-    public function first()  {
+    public function first() : ?BaseModel {
         [$query, $bindings] = $this->buildQuery();
         
         $query .= " LIMIT 0,1";
@@ -105,7 +107,7 @@ class Query {
         }        
     }
     
-    public function get() {
+    public function get() : array {
         [$query, $bindings] = $this->buildQuery();
                 
         $this->connection->prepareStaatement($query);

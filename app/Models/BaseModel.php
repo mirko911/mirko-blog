@@ -28,11 +28,11 @@ class BaseModel {
         $this->selectConnection();
     }
     
-    public static function setDatabaseConnections(array $connections) {
+    public static function setDatabaseConnections(array $connections) : void{
         static::$database_connections = $connections;
     }
     
-    public function selectConnection(){
+    public function selectConnection() : void{
         if(!isset(static::$database_connections[$this->database])){
             throw \Exception("Can't find database connection");
         }
@@ -60,7 +60,7 @@ class BaseModel {
         return $query;
     }
     
-    public function fill(array $attributes){
+    public function fill(array $attributes) : void {
         foreach($attributes as $key => $value){
             if(in_array($key, $this->fillable)){
                 $this->attributes[$key] = $value;
@@ -68,7 +68,7 @@ class BaseModel {
         }
     }
     
-    public function save(){
+    public function save() : void{
         $keyString = implode(",", array_keys($this->attributes));
         $bindString = "(" . implode(",", array_fill(0, count($this->attributes), '?')) . ')';
         $query = "INSERT INTO {$this->table} ({$keyString}) VALUES $bindString";

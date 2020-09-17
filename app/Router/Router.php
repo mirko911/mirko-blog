@@ -8,6 +8,8 @@
 
 namespace App\Router;
 
+use App\Router\Response;
+
 class Router{
     private static $routes = [];
     private $routeNotFound = null;
@@ -29,7 +31,7 @@ class Router{
         $this->methodNotAllowed = $callback;
     }
     
-    public function handleRequest(Request $request){
+    public function handleRequest(Request $request) : Response{
         $method = strtolower($request->getMethod());
         $url = $request->getURL();
         

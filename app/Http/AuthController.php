@@ -15,14 +15,14 @@ use App\Auth\Auth;
 use Jenssegers\Blade\Blade;
 
 class AuthController {
-    public function login(Request $request){
+    public function login(Request $request) : Response{
         $blade = new Blade('../views', '../cache');
         
         $view = $blade->make('auth_login',  ['csrf_token' => $_SESSION['csrf_token']])->render();
         return (new Response())->response($view, 200);  
     }
     
-    public function loginPost(Request $request){
+    public function loginPost(Request $request) : Response{
         $errors = [];
         if(empty($request->getRequest())){
             $errors[] = 'No Post Data';
@@ -70,7 +70,7 @@ class AuthController {
         return (new Response())->redirect('/')->withMessaage(['Login Successful']);
     }
     
-    public function logout(){
+    public function logout() : Response{
         Auth::logout();
         return (new Response())->redirect('/')->withMessaage(['Logout Successful']);
     }

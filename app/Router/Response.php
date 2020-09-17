@@ -37,7 +37,7 @@ class Response{
         return $this;
     }
     
-    public function handleResponse(){
+    public function handleResponse() : void{
         $_SESSION['messages'] = $this->messages;
    
         

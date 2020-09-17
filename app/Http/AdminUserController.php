@@ -15,7 +15,7 @@ use Jenssegers\Blade\Blade;
 
 
 class AdminUserController {
-    public function list(Request $request){
+    public function list(Request $request) : Response{
         if(!Auth::isLoggedIn()){
             return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
         }
@@ -29,7 +29,7 @@ class AdminUserController {
         return (new Response())->response($view, 200);  
     }
     
-    public function create(Request $request){
+    public function create(Request $request) : Response{
         if(!Auth::isLoggedIn()){
             return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
         }
@@ -41,7 +41,7 @@ class AdminUserController {
         return (new Response())->response($view, 200);  
     }
     
-    public function store(Request $request){
+    public function store(Request $request) : Response{
         if(!Auth::isLoggedIn()){
             return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
         }
