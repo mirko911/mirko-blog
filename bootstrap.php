@@ -25,11 +25,8 @@ try {
     
     include_once __DIR__ . '/app/routes.php';
     $router = new Router();
-    $router->handleRequest($request);
-    
-    $query = new App\Database\Query($database_connections['default']);
-    $result = $query->setFrom('posts')->get();
-    dd($result);
+    $response = $router->handleRequest($request);
+    echo $response;
 } catch (Exception $ex) {
     $whoops->handleException($ex);
 }
