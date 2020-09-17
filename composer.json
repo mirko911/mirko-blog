@@ -1,0 +1,21 @@
+{
+    "name": "mirkodev/blog",
+    "description": "Example blog",
+    "type": "project",
+    "require-dev": {
+        "larapack/dd": "^1.1"
+    },
+    "license": "WTFPL",
+    "authors": [
+        {
+            "name": "Mirko Rosenthal",
+            "email": "mirko91194@googlemail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+	"autoload": {
+		"psr-4": {
+			"App\\": "app/"
+		}
+	}
+}
