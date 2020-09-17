@@ -8,6 +8,7 @@
 namespace App\Http;
 
 use App\Router\Request;
+use App\Router\Response;
 use App\Models\User;
 use App\Auth\Auth;
 
@@ -17,14 +18,15 @@ class AuthController {
     public function login(Request $request){
         $blade = new Blade('../views', '../cache');
         
-        return $blade->make('auth_login',  ['csrf_token' => $_SESSION['csrf_token']])->render();
+        $view = $blade->make('auth_login',  ['csrf_token' => $_SESSION['csrf_token']])->render();
+        return (new Response())->response($view, 200);  
     }
     
     public function loginPost(Request $request){
         $errors = [];
         if(empty($request->getRequest())){
             $errors[] = 'No Post Data';
-            dd("No content");
+            return (new Response())->redirect('/login')->withMessaage($errors);
         }
         
         $postData = $request->getRequest();
@@ -41,6 +43,9 @@ class AuthController {
             $errors[] = "password is required";
         }
         
+        if(!empty($errors)){
+            return (new Response())->redirect('/login')->withMessaage($errors);
+        }
         
     
         $postData['name'] = filter_var($postData['name'], FILTER_SANITIZE_STRING);
@@ -49,6 +54,8 @@ class AuthController {
         
         if($user === null){
             $errors[] = 'User or password wrong';
+            return (new Response())->redirect('/login')->withMessaage($errors);
+
         }
         
         if(password_verify($postData['password'], $user->password)){
@@ -56,19 +63,15 @@ class AuthController {
             echo "Login successfull";
         }else{
             $errors[] = 'User or password wrong';
+            return (new Response())->redirect('/login')->withMessaage($errors);
+
         }
 
-
-        if(!empty($errors)){
-            //Redirect to create with errors,
-            dd($errors);
-        }
-       
-
+        return (new Response())->redirect('/')->withMessaage(['Login Successful']);
     }
     
     public function logout(){
         Auth::logout();
-        echo "Logout";
+        return (new Response())->redirect('/')->withMessaage(['Logout Successful']);
     }
 }

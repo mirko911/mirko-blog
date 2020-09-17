@@ -26,6 +26,15 @@
 
 
 </nav>
+      @if(isset($_SESSION['messages']))
+        @foreach($_SESSION['messages'] as $message)
+        <div class="alert alert-warning">
+            {{$message}}
+        </div>
+        @endforeach
+      @endif
+      
+      
       <div class="container">
           @yield('content')
       </div>

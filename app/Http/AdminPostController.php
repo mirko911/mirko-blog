@@ -8,37 +8,54 @@
 namespace App\Http;
 
 use App\Router\Request;
+use App\Router\Response;
 use App\Models\Post;
+use App\Auth\Auth;
 use Jenssegers\Blade\Blade;
 
 
 class AdminPostController {
     
     public function __construct(){
-        if(!Auth::isLoggedIn()){
-            dd("Not logged in");
-        }
+
     }
     
     public function list(Request $request){
+        if(!Auth::isLoggedIn()){
+            return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
+        }
+        
         $posts = Post::query()->get();
         
         $blade = new Blade('../views', '../cache');
         
-        return $blade->make('adminpost_list', ['posts' => $posts])->render();
+        $view = $blade->make('adminpost_list', ['posts' => $posts])->render();
+        return (new Response())->response($view, 200);  
+
     }
     
     public function create(Request $request){
+        if(!Auth::isLoggedIn()){
+            return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
+        }
+        
         $blade = new Blade('../views', '../cache');
 
-        return $blade->make('adminpost_create', ['csrf_token' => $_SESSION['csrf_token']])->render();
+        $view = $blade->make('adminpost_create', ['csrf_token' => $_SESSION['csrf_token']])->render();
+        
+        return (new Response())->response($view, 200);  
+
     }
     
     public function store(Request $request){
+        if(!Auth::isLoggedIn()){
+            return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
+        }
+        
         $errors = [];
         if(empty($request->getRequest())){
             $errors[] = 'No Post Data';
-            dd("No content");
+            return (new Response())->redirect('/admin/post/create')->withMessaage($errors);
         }
         
         
@@ -61,7 +78,7 @@ class AdminPostController {
         
         if(!empty($errors)){
             //Redirect to create with errors,
-            dd($errors);
+            return (new Response())->redirect('/admin/post/create')->withMessaage($errors);
         }
         
         $post = new Post();
@@ -69,6 +86,8 @@ class AdminPostController {
         $post->created_at = date('Y-m-d H:i:s');
         $post->updated_at = date('Y-m-d H:i:s');
         $post->save();
-        dd($post);
+        
+        return (new Response())->redirect('/admin/post')->withMessaage($errors);
+
     }
 }

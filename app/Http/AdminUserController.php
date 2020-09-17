@@ -8,37 +8,49 @@
 namespace App\Http;
 
 use App\Router\Request;
+use App\Router\Response;
 use App\Models\User;
 use App\Auth\Auth;
 use Jenssegers\Blade\Blade;
 
 
 class AdminUserController {
-    public function __construct(){
-        if(!Auth::isLoggedIn()){
-            dd("Not logged in");
-        }
-    }
     public function list(Request $request){
+        if(!Auth::isLoggedIn()){
+            return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
+        }
+        
         $users = User::query()->get();
         
         $blade = new Blade('../views', '../cache');
         
-        return $blade->make('adminuser_list', ['users' => $users])->render();
+        $view = $blade->make('adminuser_list', ['users' => $users])->render();
+        
+        return (new Response())->response($view, 200);  
     }
     
     public function create(Request $request){
+        if(!Auth::isLoggedIn()){
+            return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
+        }
+        
         $blade = new Blade('../views', '../cache');
 
-        return $blade->make('adminuser_create', ['csrf_token' => $_SESSION['csrf_token']])->render();
+        $view = $blade->make('adminuser_create', ['csrf_token' => $_SESSION['csrf_token']])->render();
+        
+        return (new Response())->response($view, 200);  
     }
     
     public function store(Request $request){
+        if(!Auth::isLoggedIn()){
+            return (new Response())->redirect('/login')->withMessaage(['Not logged in']);
+        }
+        
         $errors = [];
         
         if(empty($request->getRequest())){
             $errors[] = 'No Post Data';
-            dd("No content");
+            return (new Response())->redirect('/admin/user/create')->withMessaage($errors);
         }
         
         
@@ -76,7 +88,7 @@ class AdminUserController {
 
         if(!empty($errors)){
             //Redirect to create with errors,
-            dd($errors);
+            return (new Response())->redirect('/admin/user/create')->withMessaage($errors);
         }
         
         $user = new User();
@@ -86,5 +98,7 @@ class AdminUserController {
         $user->updated_at = date('Y-m-d H:i:s');
         $user->save();
         
+        return (new Response())->redirect('/admin/user');
+
     }
 }

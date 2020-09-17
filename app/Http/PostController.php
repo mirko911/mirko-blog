@@ -11,6 +11,7 @@ namespace App\Http;
 use Jenssegers\Blade\Blade;
 
 use App\Router\Request;
+use App\Router\Response;
 use App\Models\Post;
 
 class PostController{    
@@ -19,6 +20,8 @@ class PostController{
         
         $blade = new Blade('../views', '../cache');
         
-        return $blade->make('posts', ['posts' => $posts])->render();
+        $view =  $blade->make('posts', ['posts' => $posts])->render();
+        
+        return (new Response())->response($view, 200);  
     }
 }

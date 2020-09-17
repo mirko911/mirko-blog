@@ -30,8 +30,9 @@ try {
     
     include_once __DIR__ . '/app/routes.php';
     $router = new Router();
-    $response = $router->handleRequest($request);
-    echo $response;
+    $router->handleRequest($request)
+            ->handleResponse();
+    
 } catch (Exception $ex) {
     $whoops->handleException($ex);
 }
